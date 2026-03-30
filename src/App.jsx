@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useMarketStream } from './hooks/useMarketStream';
 import { Activity } from 'lucide-react';
+import { TradeJourney } from './components/TradeJourney';
 
 function App() {
   const [impairments, setImpairments] = useState({
@@ -18,7 +19,8 @@ function App() {
   };
 
   return (
-    <div className="dashboard-container">
+    <>
+      <div className="dashboard-container">
       {/* LEFT COLUMN: VISUALS */}
       <div className="glass-panel" style={{ overflow: 'hidden' }}>
         <div className="header">
@@ -140,7 +142,12 @@ function App() {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+
+      <div style={{ padding: '0 24px 24px 24px' }}>
+        <TradeJourney impairments={impairments} />
+      </div>
+    </>
   );
 }
 

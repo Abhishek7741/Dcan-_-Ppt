@@ -24,7 +24,7 @@ body {
   grid-template-columns: 1fr 400px;
   gap: 20px;
   padding: 24px;
-  height: 100vh;
+  min-height: calc(100vh - 350px);
   box-sizing: border-box;
 }
 
@@ -176,3 +176,106 @@ body {
 .log-warn { color: #f59e0b; }
 .log-error { color: #ef4444; }
 .log-data { color: #22c55e; }
+
+/* Trade Journey Styles */
+.journey-track-container {
+  position: relative;
+  margin: 40px 0;
+  padding: 20px 0;
+}
+.journey-progress-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+.journey-nodes {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.journey-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 120px;
+  text-align: center;
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+.journey-node.reached { opacity: 0.8; }
+.journey-node.current { opacity: 1; transform: scale(1.1); }
+.node-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+.journey-node.reached .node-icon {
+  background: var(--panel-bg);
+  border-color: var(--accent-blue);
+  color: var(--text-main);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+}
+.journey-node.current .node-icon {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+}
+.node-label { font-weight: 600; font-size: 14px; }
+.node-desc { font-size: 11px; color: var(--text-muted); line-height: 1.3; }
+
+/* The Packet */
+.journey-packet {
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  transform: translateY(-50%);
+  z-index: 3;
+  box-shadow: 0 0 10px var(--accent-blue);
+}
+.packet-moving { background: var(--accent-blue); box-shadow: 0 0 10px var(--accent-blue); }
+.packet-congested { background: #f59e0b; box-shadow: 0 0 15px #f59e0b; animation: pulse 1s infinite; }
+.packet-success { background: var(--accent-green); box-shadow: 0 0 15px var(--accent-green); }
+.packet-corrupted { background: var(--accent-red); box-shadow: 0 0 15px var(--accent-red); }
+.packet-failed { background: var(--accent-red); box-shadow: 0 0 15px var(--accent-red); }
+.packet-dropped { opacity: 0; transform: translateY(-50%) scale(0); transition: all 0.5s !important; }
+
+@keyframes pulse {
+  0% { transform: translateY(-50%) scale(0.9); }
+  50% { transform: translateY(-50%) scale(1.2); }
+  100% { transform: translateY(-50%) scale(0.9); }
+}
+
+.journey-status-area {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 20px;
+  margin-top: 10px;
+}
+.journey-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: flex-end;
+  background: rgba(0,0,0,0.3);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.packet-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
